@@ -9,12 +9,12 @@
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Login</title>
 
-<link rel="stylesheet" type="text/css" href="bootstrap.min.css"  />
-<link rel="stylesheet" type="text/css" href="main.css"  />
+<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css"  />
+<link rel="stylesheet" type="text/css" href="/resources/css/main.css"  />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="bootstrap.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
 
 </head>
 <body>
