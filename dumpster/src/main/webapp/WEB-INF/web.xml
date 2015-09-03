@@ -1,21 +1,27 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
-<web-app>
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		 xmlns="http://java.sun.com/xml/ns/javaee"
+ 		 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+ 		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+ 		 id="WebApp_ID" version="3.0">
+ 
 	<display-name>Dumspter App</display-name>
 
+	<!--
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			/WEB-INF/dumpster-*.xml
+			/WEB-INF/dumpster-servlet.xml
 		</param-value>
 	</context-param>
+	-->
+	<!--  
 	<listener>
 		<listener-class>
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
+	-->
 	<servlet>
 		<servlet-name>dumpster</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -23,9 +29,9 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dumpster</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/dumpsterapp/*</url-pattern>
 	</servlet-mapping>
-	<!-- <welcome-file-list>
-		<welcome-file>dumpster/login.jsp</welcome-file>
-	</welcome-file-list> -->
+	<welcome-file-list>
+		<welcome-file>/dumpster/login/login.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>
