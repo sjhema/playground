@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
@@ -6,35 +6,32 @@
            http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/security
-           http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+           http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
 	<security:global-method-security jsr250-annotations="enabled" />
 
+	Define how the security filters should be applied on the incoming urls 
     <bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
-		<security:filter-chain-map path-type="ant">
-		    <security:filter-chain pattern="/index.jsp" filters="none"/>
+		<security:filter-chain-map request-matcher="ant">
+			<security:filter-chain pattern="/login/*" filters="none"/>
+			<security:filter-chain pattern="/**" filters="httpSessionContextFilter, "/>
+		</security:filter-chain-map>
+	</bean>
+    <constructor-arg>
+        <bean class="org.springframework.security.web.DefaultSecurityFilterChain">
 		    <security:filter-chain pattern="/login/*" filters="none"/>
-		    <security:filter-chain pattern="/image/**" filters="none"/>
-		    <security:filter-chain pattern="/global/*" filters="none"/>
-		    <security:filter-chain pattern="/*/view*.do" filters="none"/>
-		    <security:filter-chain pattern="/trans/**" filters="none"/>
-		    <security:filter-chain pattern="/main/**" filters="none"/>
-		    <security:filter-chain pattern="/content/**" filters="none"/>
-		    <security:filter-chain pattern="/layout/**" filters="none"/>
-		    <security:filter-chain pattern="/images/**" filters="none"/>
-		    <security:filter-chain pattern="/servlet/**" filters="none"/>
-		    <security:filter-chain pattern="/css/**" filters="none"/>
-		    <security:filter-chain pattern="/js/**" filters="none"/>
 			<security:filter-chain pattern="/**" 
 				filters="httpSessionContextFilter,
 						logoutFilter,
 						authenticationProcessingFilter,
 						exceptionTranslationFilter,
 						filterSecurityInterceptor" />
-		</security:filter-chain-map>
+			</bean>
+	</constructor-arg>
+	
 	</bean>
 	
-	<bean id="httpSessionContextFilter" class="org.springframework.security.web.context.HttpSessionContextIntegrationFilter"/>
+	<bean id="httpSessionContextFilter" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/> 
 	
 	<bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
 		<constructor-arg ref="logoutSuccessHandler" /> 
@@ -46,12 +43,12 @@
 	</bean>
 	
 	<bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
-		<property name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
-		<property name="accessDeniedHandler" ref="accessDeniedHandler" />
+		<constructor-arg name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
+		<constructor-arg name="accessDeniedHandler" ref="accessDeniedHandler" />
 	</bean>
 
 	<bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint" >
-		<property name="loginFormUrl" value="/login/login.do" />
+		<constructor-arg name="loginFormUrl" value="/login/login.do" />
 	</bean>
 	<bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
 		<property name="errorPage" value="/login/unauthorized.do"/>
@@ -67,39 +64,44 @@
 	</bean>
 
 	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
-		<property name="providers">
-			<list>
-				<ref bean="authenticationProvider"/>
-			</list>
-		</property>
+		<constructor-arg>
+	        <list>
+	            <ref bean="authenticationProvider" />
+	        </list>
+	    </constructor-arg>
 	</bean>
 	
 	<bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		<property name="userDetailsService" ref="userDetailService"/>
+	<constructor-arg>
+			<user-service>
+				<user name="sjhema" password="sjhemaO" authorities="user" />
+				<user name="raghav" password="raghav" authorities="user,admin" />
+				<user name="bharat" password="bharat" authorities="user,admin" />
+			</user-service>
+	</constructor-arg>
 	</bean>
 	
-	<bean id="userDetailService" class="com.trans.core.spring.DatabaseUserDetailService"/>
-	<!--  bean id="passwordEncoder" class="com.primovision.lutransport.core.spring.CustomPasswordEncoder"/> -->
+	
 	
 	<bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
 		<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="accessDecisionManager" ref="accessDecisionManager"/>
 		<property name="securityMetadataSource" ref="customSecureResourceFilter"/>
 	</bean>
-	<!-- <bean id="customSecureResourceFilter" class="com.primovision.lutransport.core.spring.CustomSecureResourceFilter">
+    <bean id="customSecureResourceFilter" class="com.trans.core.CustomSecureResourceFilter">
 		<property name="ignoreUrls" value="/login/*"/> 
-	</bean>-->
-	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
-		<property name="decisionVoters">
+	</bean>
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<constructor-arg name="decisionVoters">
 		<list>
 			<bean class="org.springframework.security.access.vote.RoleVoter" />
 			<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
 		</list>
-		</property>
+		</constructor-arg>
 	</bean>
     <bean id="authenticationFailureHandler" class="com.trans.core.AuthenticationFailureHandler"  >
         <constructor-arg value="/dumpster/login.do"/>
     </bean>
     
-    <!-- <bean id="logoutSuccessHandler" class="com.primovision.lutransport.core.LogoutSuccessHandler"  /> -->
-</beans>
+    <bean id="logoutSuccessHandler" class="com.trans.core.LogoutSuccessHandler"  /> 
+</beans> -->
