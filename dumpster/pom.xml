@@ -29,6 +29,8 @@
 			<version>${servlet-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- Jars for Spring Security - Authentication & Authorization -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -40,12 +42,40 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>4.0.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.0.2.RELEASE</version>
+		</dependency>
+		
+		<!--  -->
+		
+		<!-- Do we need this? -->
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-framework-bom</artifactId>
 			<version>4.1.6.RELEASE</version>
 			<type>pom</type>
 			<scope>import</scope>
 		</dependency>
+		<!---->
+
+		
+		<!-- If accessing context path in jsp file like $pageContext... -->
+		<!-- <dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+		</dependency> -->
+		
+		<!-- for Spring security NOT WORKING - look for workaround -->
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>jstl</artifactId> 
+			<version>1.2</version> </dependency> -->
+
 
 		<!-- dependency> <groupId>javax.servlet</groupId> <artifactId>servlet-api</artifactId> 
 			<version>2.5</version> </dependency> <dependency> <groupId>org.springframework</groupId> 

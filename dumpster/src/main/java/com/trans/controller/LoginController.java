@@ -10,7 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String displayHome(HttpServletRequest request, ModelMap model) {
+	public String displayLogin(HttpServletRequest request, ModelMap model) {
 		return "login/login";
+	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String displayHome(HttpServletRequest request, ModelMap model) {
+		return "home/home";
 	}
 }
